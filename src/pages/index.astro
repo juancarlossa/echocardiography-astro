@@ -1,11 +1,53 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { TabsLayout } from "../components/tabs/TabsLayout.tsx";
+import { ToggleDarkMode } from "../components/ToggleDarkMode.tsx";
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import {
+  patientData,
+  plax,
+  psax,
+  a4c,
+  sc,
+  ssn,
+  mitralValve,
+  aorticValve,
+  tricuspidValve,
+  pulmonaryValve,
+  lvot,
+  rvot,
+  dopplerValves,
+} from "../lib/data.ts";
 ---
 
 <Layout>
-	<Welcome />
+  <section class="w-full bg-slate-950 flex items-start justify-center p-10">
+    <TabsLayout
+      forms={{
+        "Patient Data": [
+          { title: "Patient Data", data: patientData, isVertical: true },
+        ],
+        "PLAX and PSAX": [
+          { title: "PLAX", data: plax },
+          { title: "PSAX", data: psax },
+        ],
+        A4C: [{ title: "A4C", data: a4c }],
+        "SC and SSN": [
+          { title: "SC", data: sc },
+          { title: "SSN", data: ssn },
+        ],
+        "DOPPLER VALVES": [
+          { title: "Valvula mitral", data: mitralValve },
+          { title: "Valvula aortica", data: aorticValve },
+          { title: "Valvula tricuspida", data: tricuspidValve },
+          { title: "Valvula de arteria pulmonar", data: pulmonaryValve },
+          { title: "LVOT", data: lvot },
+          { title: "RVOT", data: rvot },
+        ],
+        SUMMARY: [],
+      }}
+      client:idle
+    />
+  </section>
 </Layout>
