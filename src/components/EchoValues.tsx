@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { EchoFormType } from "./EchoForm";
 import type { EchoField } from "@/types/types";
 
-type EchoValues = Record<string, Record<string, number>>;
+type EchoValues = Record<string, Record<string, number | "man" | "woman">>;
+
 type TabsLayoutProps = {
-  forms: Record<string, EchoFormType[]>; // ahora cada tab puede tener varios formularios
+  forms: Record<string, EchoFormType[]>
 };
 
 export function EchoValues ({ forms }: TabsLayoutProps) {
@@ -15,8 +16,8 @@ export function EchoValues ({ forms }: TabsLayoutProps) {
     formArray.forEach((formType) => {
       if (formType.title) titleMap[formType.title] = formType.data;
     });
-  });
-  console.log("EchoValues", titleMap);
+  })
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -29,19 +30,36 @@ export function EchoValues ({ forms }: TabsLayoutProps) {
     }
   }, []);
 
+  const globalGender = useMemo<"man" | "woman" | undefined>(() => {
+    const patient = echoValues["Patient Data"];
+    if (!patient) return undefined;
+    const g = patient.gender;
+    return g === "man" || g === "woman" ? g : undefined;
+  }, [echoValues]);
+
+  const genderStyle = globalGender === "man" ? "text-blue-400" : "text-pink-400"
+
   if (!Object.keys(echoValues).length) {
     return <p className="text-sm text-muted-foreground">No hay valores guardados.</p>;
   }
 
   return (
     <div className="space-y-5 grid grid-cols-4 space-x-5">
+
       {Object.entries(echoValues).map(([formTitle, values]) => {
         console.log(echoValues, formTitle);
         const definitions: EchoField[] = titleMap[formTitle] || [];
 
         return (
           <section key={formTitle} className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-            <h3 className="text-lg font-semibold mb-2">{formTitle}</h3>
+            <div className="flex flex-row items-center justify-between">
+              <h3 className={`text-lg font-semibold ${genderStyle}`}>{formTitle}</h3>
+              {formTitle === "Patient Data" && globalGender && (
+                <span className={`${genderStyle} font-medium`}>
+                  {globalGender[0].toUpperCase() + globalGender.slice(1)}
+                </span>
+              )}
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -52,9 +70,10 @@ export function EchoValues ({ forms }: TabsLayoutProps) {
                 </thead>
                 <tbody>
                   {Object.entries(values).map(([fieldName, val]) => {
-                    // Busca la definición correspondiente
-                    const def = definitions.find((f) => f.name === fieldName);
-                    const label = def?.label ?? '';
+                    if (fieldName === "gender") return null; // ya lo mostramos arriba
+
+                    const def = titleMap[formTitle].find((f) => f.name === fieldName);
+                    const label = def?.label ?? "";
                     const unit = def?.unit ? ` (${def.unit})` : "";
 
                     return (

@@ -33,7 +33,7 @@ export function TabsLayout ({ forms }: TabsLayoutProps) {
 
 
   return (
-    <Tabs value={tab} className="w-full  h-full flex flex-col justify-center items-center">
+    <Tabs value={tab} className="w-full h-full flex flex-col justify-center items-center">
       <div className="flex flex-row justify-center items-center w-full gap-x-5">
         <TabsList className="w-full justify-center items-center ">
 
