@@ -19,7 +19,7 @@ export function TabsLayout ({ forms }: TabsLayoutProps) {
 
   function getInitialTab (): string {
     const stored = typeof window !== "undefined" ? window.__initialTab : null;
-    return stored && tabKeys.includes(stored) ? stored : '';
+    return stored && tabKeys.includes(stored) ? stored : tabKeys[0];
   }
 
   const [tab, setTab] = useState<string>(() => getInitialTab());
