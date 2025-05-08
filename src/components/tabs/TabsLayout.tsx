@@ -58,7 +58,7 @@ export function TabsLayout ({ forms }: TabsLayoutProps) {
           }
           <div className={`grid w-full gap-6 
             ${forms[tab].length === 1 ? 'grid-cols-1 lg:max-w-1/3 max-h-1/2' : ''}
-            ${forms[tab].length === 2 ? 'grid-cols-2 lg:max-w-[50vw]' : ''}
+            ${forms[tab].length === 2 ? 'grid-cols-2 lg:max-w-full' : ''}
             ${forms[tab].length > 2 ? 'grid-cols-3' : ''} 
             justify-center items-stretch`}>
             {forms[tab].map((form, index) => (

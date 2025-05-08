@@ -78,24 +78,12 @@ export const patientData: EchoField[] = [
 export const plax: EchoField[] = [
   { label: "LVIDd", name: "lvidd", unit: measure, type: "input",
     absoluteReferenceRange: {
-      "male": {
-          "lowerValue": 4.2,
-          "higherValue": 5.8
-      },
-      "female": {
-          "lowerValue": 3.8,
-          "higherValue": 5.2
-      }
+      male: { lowerValue: 4.2, higherValue: 5.8 },
+      female: { lowerValue: 3.8, higherValue: 5.2 }
     },
     bsaIndexedReferenceRange: {
-      "male": {
-          "lowerValue": 2.2,
-          "higherValue": 3.0
-      },
-      "female": {
-          "lowerValue": 2.3,
-          "higherValue": 3.1
-      }
+      male: { lowerValue: 2.2, higherValue: 3.0 },
+      female: { lowerValue: 2.3, higherValue: 3.1 }
     }
   },
   { label: "LVIDs",name: "lvids",unit: measure, type: "input",
@@ -187,29 +175,72 @@ export const plax: EchoField[] = [
 ]
 
 export const psax: EchoField[] = [
-  { label: "RVOTpsax", name: "rvotpsax", unit: measure, type: "input" },
-  { label: "PA", name: "pa", unit: measure, type: "input" },
+  { label: "RVOTpsax", name: "rvotpsax", unit: measure, type: "input",
+    absoluteReferenceRange: {
+      male: { lowerValue: 2.1, higherValue: 3.5 },
+      female: { lowerValue: 2.1, higherValue: 3.5 }
+    },
+  },
+  { label: "PA", name: "pa", unit: measure, type: "input",
+    absoluteReferenceRange: {
+      male: { lowerValue: 1.5, higherValue: 2.5 },
+      female: { lowerValue: 1.5, higherValue: 2.5 }
+    },
+  },
 ]
 
 export const a4c: EchoField[] = [
-  { label: "LVEDV", name: "lvedv", unit: "mL", type: "input" },
-  { label: "LVESV", name: "lvesv", unit: "mL", type: "input" },
-  {
-    label: "LVEF",
-    name: "lvef",
-    unit: "%",
-    type: "calculated",
-    formula: "(lvedv - lvesv) / lvedv * 100",
+  { label: "LVEDV", name: "lvedv", unit: "mL", type: "input", 
+    absoluteReferenceRange: {
+      male: { lowerValue: 62, higherValue: 150 },
+      female: { lowerValue: 46, higherValue: 106 }
+    },
+    bsaIndexedReferenceRange: {
+      male: { lowerValue: 34, higherValue: 74 },
+      female: { lowerValue: 29, higherValue: 61 }
+    }
   },
+  { label: "LVESV", name: "lvesv", unit: "mL", type: "input",
+    absoluteReferenceRange: {
+      male: { lowerValue: 21, higherValue: 61 },
+      female: { lowerValue: 14, higherValue: 42 }
+    },
+    bsaIndexedReferenceRange: {
+      male: { lowerValue: 11, higherValue: 31 },
+      female: { lowerValue: 8, higherValue: 24 }
+    }
+  },
+  { label: "LVEF", name: "lvef", unit: "%", type: "calculated", formula: "(lvedv - lvesv) / lvedv * 100",
+    absoluteReferenceRange: {
+      male: { lowerValue: 52, higherValue: 72 },
+      female: { lowerValue: 54, higherValue: 74 }
+    },
+  },
+
   { label: "LA volume", name: "lav", unit: "mL", type: "input" },
   { label: "LA mayor", name: "la_major", unit: measure, type: "input" },
   { label: "LA menor", name: "la_minor", unit: measure, type: "input" },
   { label: "RA volume", name: "rav", unit: "mL", type: "input" },
   { label: "RA mayor", name: "ra_major", unit: measure, type: "input" },
   { label: "RA menor", name: "ra_minor", unit: measure, type: "input" },
-  { label: "RV basal", name: "rv_basal", unit: measure, type: "input" },
-  { label: "RV medio", name: "rv_medio", unit: measure, type: "input" },
-  { label: "RV longitudinal", name: "rv_longitudinal", unit: measure, type: "input" },
+  { label: "RV basal", name: "rv_basal", unit: measure, type: "input", 
+    absoluteReferenceRange: {
+      male: { lowerValue: 25, higherValue: 41 },
+      female: { lowerValue: 25, higherValue: 41 }
+    },
+  },
+  { label: "RV medio", name: "rv_medio", unit: measure, type: "input",
+    absoluteReferenceRange: {
+      male: { lowerValue: 19, higherValue: 35 },
+      female: { lowerValue: 19, higherValue: 35 }
+    },
+  },
+  { label: "RV longitudinal", name: "rv_longitudinal", unit: measure, type: "input", 
+    absoluteReferenceRange: {
+      male: { lowerValue: 59, higherValue: 83 },
+      female: { lowerValue: 59, higherValue: 83 }
+    },
+  },
   { label: "TAPSE", name: "tapse", unit: measure, type: "input" },
   { label: "MAPSE", name: "mapse", unit: measure, type: "input" },
 ]
