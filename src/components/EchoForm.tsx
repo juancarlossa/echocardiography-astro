@@ -1,6 +1,6 @@
 import type { EchoField } from "@/types/types";
 import { evaluate } from "mathjs";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Switch } from "./ui/switch";
 
 export type EchoFormType = {
@@ -11,15 +11,36 @@ export type EchoFormType = {
 
 export function EchoForm ({ data, title, isVertical = false }: EchoFormType) {
   const [values, setValues] = useState<Record<string, number>>({});
+  const allFormsRef = useRef<Record<string, Record<string, number>>>({});
+
+  useEffect(() => {
+    if (!title) return;
+
+    try {
+      const raw = localStorage.getItem("echoValues") || "{}";
+      allFormsRef.current = JSON.parse(raw);
+      if (allFormsRef.current[title]) {
+        setValues(allFormsRef.current[title]);
+      }
+    } catch {
+      allFormsRef.current = {};
+    }
+  }, [title]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const num = parseFloat(value);
-    setValues((prev) => ({
-      ...prev,
+    const newValues = {
+      ...values,
       [name]: isNaN(num) ? 0 : num,
-    }));
-  };
+    };
+    setValues(newValues);
+
+    if (title) {
+      allFormsRef.current[title] = newValues;
+      localStorage.setItem("echoValues", JSON.stringify(allFormsRef.current));
+    }
+  }
 
   const calculateValueStyle = (value: number, referenceRange?: { lowerValue: number; higherValue: number }) => {
     if (referenceRange) {
